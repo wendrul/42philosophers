@@ -3,19 +3,19 @@
 /*                                                        :::      ::::::::   */
 /*   ft_error.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: wendrul <wendrul@student.42.fr>            +#+  +:+       +#+        */
+/*   By: user42 <user42@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/16 11:41:33 by wendrul           #+#    #+#             */
-/*   Updated: 2021/06/29 12:35:25 by wendrul          ###   ########.fr       */
+/*   Updated: 2021/07/08 03:41:01 by user42           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "ft_error.h"
+#include "philo.h"
 
-int error_exit(char *msg, int exit_code)
+int	error_exit(char *msg, int exit_code)
 {
-    ft_putstr_fd("Error: ", STDERR_FILENO);
-    ft_putendl_fd(msg, STDERR_FILENO);
-    exit(exit_code);
-    return (-69);
+	ft_putstr_fd("Error: ", STDERR_FILENO);
+	ft_putstr_fd(msg, STDERR_FILENO);
+	ft_putstr_fd("\n", STDERR_FILENO);
+	return (exit_code);
 }

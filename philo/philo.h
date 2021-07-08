@@ -30,6 +30,10 @@ typedef struct s_philo
 }t_philo;
 
 time_t	get_time(void);
-int		ft_atoi(char *str);
+int		ft_atoi(const char *str);
+void ft_putstr_fd(char *str, int fd);
+
+void	*philosopher(void *philo);
+void	print_status(t_philo philo, int status);
 
 #endif

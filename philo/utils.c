@@ -8,54 +8,44 @@ time_t	get_time(void)
 	return ((tv.tv_sec * (time_t)1000) + (tv.tv_usec / 1000));
 }
 
-static int	base_is_valid(const char *base)
+int	ft_strlen(char const *str)
+{
+	int i;
+
+	i = 0;
+	while (str[i])
+		i++;
+	return (i);
+}
+
+int	ft_atoi(char const *str)
 {
 	int	i;
-	int	j;
+	int	start;
+	int	is_neg;
+	int	res;
 
-	if (ft_strlen(base) < 2)
+	if (!str)
 		return (0);
 	i = 0;
-	while (base[i + 1])
-	{
-		j = 1;
-		while (base[i + j])
-		{
-			if (base[i + j] == base[i])
-				return (0);
-			j++;
-		}
+	while (str[i] == '\t' || str[i] == '\n' || str[i] == '\v' ||
+			str[i] == '\f' || str[i] == '\r' || str[i] == ' ')
 		i++;
-	}
-	return (1);
+	is_neg = (str[i] == '-') ? -1 : 1;
+	if (is_neg == -1 || str[i] == '+')
+		i++;
+	start = i;
+	res = 0;
+	while (str[i] >= '0' && str[i] <= '9')
+		res = (res * 10) + (str[i++] - '0');
+	return (res * is_neg);
 }
 
-static int	ft_atoi_base(const char *nptr, const char *base)
+void ft_putstr_fd(char *str, int fd)
 {
-	int				sgn;
-	unsigned int	nb;
-
-	if (!base_is_valid(base))
-		return (0);
-	sgn = 1;
-	while (ft_iswhitespace(*nptr))
-		nptr++;
-	if (*nptr == '+' || *nptr == '-')
-	{
-		if (*nptr == '-')
-			sgn = -1;
-		nptr++;
-	}
-	nb = 0;
-	while (ft_indexof(*nptr, base) != -1)
-	{
-		nb = nb * ft_strlen(base) + ft_indexof(*nptr, base);
-		nptr++;
-	}
-	return (sgn * nb);
-}
-
-int ft_atoi(char *str)
-{
-	return (ft_atoi_base(str, "0123456789"));
+	int i;
+	i = -1;
+	while (str[i])
+		i++;
+	write(fd, str, i);
 }

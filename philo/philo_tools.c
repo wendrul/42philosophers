@@ -18,5 +18,9 @@ char *philo_message(int status)
 
 void	print_status(t_philo philo, int status)
 {
-	printf("%-10d %-2d %s\n", get_time(), philo.id, philo_message(status));
+	static time_t start_time = 0;
+
+	if (start_time == 0)
+		start_time = get_time();
+	printf("%-10ld %-2d %s\n", get_time() - start_time, philo.id, philo_message(status));
 }
