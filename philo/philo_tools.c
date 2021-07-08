@@ -22,5 +22,5 @@ void	print_status(t_philo philo, int status)
 
 	if (start_time == 0)
 		start_time = get_time();
-	printf("%-10ld %-2d %s\n", get_time() - start_time, philo.id, philo_message(status));
+	printf("%-7ld %-2d %s\n", get_time() - start_time, philo.id, philo_message(status));
 }

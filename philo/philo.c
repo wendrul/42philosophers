@@ -6,7 +6,7 @@
 /*   By: user42 <user42@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/29 12:16:46 by wendrul           #+#    #+#             */
-/*   Updated: 2021/07/08 03:45:16 by user42           ###   ########.fr       */
+/*   Updated: 2021/07/08 05:24:26 by user42           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,8 @@ static int start_threads(t_philo *philos, int amount)
 	{
 		if (pthread_create(&th_id, NULL, philosopher, (void*)&philos[i]) != 0)
 			return (error_exit(THREAD_CREATE_FAIL, -1));
-		usleep(1000);
+		pthread_detach(th_id);
+		usleep(100000);
 	}
 	return (0);
 }

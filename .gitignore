@@ -1,0 +1,4 @@
+philo_one
+obj/
+*.out
+*.o
