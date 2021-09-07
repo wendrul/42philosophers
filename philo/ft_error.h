@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_error.h                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: user42 <user42@student.42.fr>              +#+  +:+       +#+        */
+/*   By: ede-thom <ede-thom@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/16 11:53:14 by wendrul           #+#    #+#             */
-/*   Updated: 2021/07/08 03:23:58 by user42           ###   ########.fr       */
+/*   Updated: 2021/09/07 13:34:35 by ede-thom         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,7 @@
 # define WRONG_NUMBER_OF_ARGS "Wrong number of arguments "
 # define PARSING_ERROR "parsing failed"
 # define THREAD_CREATE_FAIL "creating thread failed"
+# define MUTEX_INIT_FAIL "failed to init mutex"
 
 int	error_exit(char *msg, int exit_code);
 

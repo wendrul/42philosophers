@@ -5,6 +5,7 @@
 # define PHILO_SLEEP_MESSAGE "is sleeping"
 # define PHILO_THINK_MESSAGE "is thinking"
 # define PHILO_FORK_MESSAGE "has taken a fork"
+# define PHILO_FINISHED_MESSAGE "has taken a fork"
 # define PHILO_DIED_MESSAGE "died"
 
 # include <stdio.h>
@@ -22,6 +23,8 @@ typedef struct s_philo
 	long			death_time;
 	long			sleep_time;
 	long			eat_time;
+	int				finished_eating;
+	time_t			last_ate;
 	pthread_mutex_t	*right_fork;
 	pthread_mutex_t	*left_fork;
 }t_philo;

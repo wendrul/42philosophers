@@ -1,7 +1,5 @@
 #include "philo.h"
 
-
-
 void	take_fork(t_philo philo, pthread_mutex_t *fork)
 {
 	pthread_mutex_lock(fork);
@@ -11,7 +9,7 @@ void	take_fork(t_philo philo, pthread_mutex_t *fork)
 void	philo_eat(t_philo philo)
 {
 	print_status(philo, PHILO_EAT_MESSAGE);
-	usleep(philo.eat_time);
+	usleep(philo.eat_time * 1000);
 	pthread_mutex_unlock(philo.left_fork);
 	pthread_mutex_unlock(philo.right_fork);
 }
@@ -19,30 +17,35 @@ void	philo_eat(t_philo philo)
 void	philo_sleep(t_philo philo)
 {
 	print_status(philo, PHILO_SLEEP_MESSAGE);
-	usleep(philo.sleep_time);
+	usleep(philo.sleep_time * 1000);
 }
 
 void	philo_think(t_philo philo)
 {
 	print_status(philo, PHILO_THINK_MESSAGE);
-	usleep(philo.sleep_time);
 }
 
 void	*philosopher(void *philo_ptr)
 {
 	t_philo philo;
+	t_philo *philo_ptr2;
 
 	philo = *(t_philo*)philo_ptr;
+	philo_ptr2 = (t_philo*)philo_ptr;
+	if (philo.id % 2 == 1) {
+		usleep(1000 * (philo.eat_time / 2));
+	}
 	while (philo.remaining_meals != 0)
 	{
 		take_fork(philo, philo.left_fork);
 		take_fork(philo, philo.right_fork);
+		philo_ptr2->last_ate = get_time();
 		philo_eat(philo);
 		philo_sleep(philo);
 		philo_think(philo);
 		if (philo.remaining_meals > 0)
 			philo.remaining_meals--;
 	}
-	print_status(philo, "Finished eating bye");
+	philo_ptr2->finished_eating = 1;
 	return (NULL);
 }
