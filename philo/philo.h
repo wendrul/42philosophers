@@ -1,12 +1,6 @@
 #ifndef PHILO_H
 # define PHILO_H
 
-# define PHILO_EAT 69
-# define PHILO_SLEEP 70
-# define PHILO_THINK 71
-# define PHILO_FORK 72
-# define PHILO_DIED 73
-
 # define PHILO_EAT_MESSAGE "is eating"
 # define PHILO_SLEEP_MESSAGE "is sleeping"
 # define PHILO_THINK_MESSAGE "is thinking"
@@ -20,20 +14,23 @@
 # include <unistd.h>
 # include <stdlib.h>
 
+
 typedef struct s_philo
 {
-	int		id;
-	int		remaining_meals;
-	long	death_time;
-	long	sleep_time;
-	long	eat_time;
+	int				id;
+	int				remaining_meals;
+	long			death_time;
+	long			sleep_time;
+	long			eat_time;
+	pthread_mutex_t	*right_fork;
+	pthread_mutex_t	*left_fork;
 }t_philo;
 
 time_t	get_time(void);
 int		ft_atoi(const char *str);
-void ft_putstr_fd(char *str, int fd);
+void	ft_putstr_fd(char *str, int fd);
 
 void	*philosopher(void *philo);
-void	print_status(t_philo philo, int status);
+void	print_status(t_philo philo, char *msg);
 
 #endif

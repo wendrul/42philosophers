@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: user42 <user42@student.42.fr>              +#+  +:+       +#+         #
+#    By: ede-thom <ede-thom@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/11/16 17:26:10 by ede-thom          #+#    #+#              #
-#    Updated: 2021/07/08 03:48:20 by user42           ###   ########.fr        #
+#    Updated: 2021/09/07 11:22:36 by ede-thom         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -52,7 +52,7 @@ $(OBJ_DIR)/%.o:	$(SRC_DIR)/%.c $(INC_DIR)/
 				@$(MKDIR_P) $(OBJ_DIR)
 				@$(CC) $(CFLAGS) -c -o $(OBJ_DIR)/$(notdir $@) $< $(INC)
 				@printf "$(CYAN)Compiling $(MAGENTA)$<$(RESET)\r"
-				@printf "\r                                                                                                                                \r"
+				@printf "\r                                                  \r"
 
 $(NAME):		$(OBJS)
 				@printf "$(CYAN)Done creating $(NAME) object files!\n$(RESET)"

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   philo.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: user42 <user42@student.42.fr>              +#+  +:+       +#+        */
+/*   By: ede-thom <ede-thom@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/29 12:16:46 by wendrul           #+#    #+#             */
-/*   Updated: 2021/07/08 05:24:26 by user42           ###   ########.fr       */
+/*   Updated: 2021/09/07 11:47:15 by ede-thom         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,19 +46,27 @@ int parse_args(int argc, char **argv, t_philo **philos_ptr)
 	return (amount);
 }
 
+// static void	init_mutexes()
+// {
+	
+
+// 	pthread_mutex_init()
+// }
+
 static int start_threads(t_philo *philos, int amount)
 {
 	int i;
 	pthread_t th_id;
 
 	i= -1;
+	// init_mutexes();
 	while (++i < amount)
 	{
 		if (pthread_create(&th_id, NULL, philosopher, (void*)&philos[i]) != 0)
 			return (error_exit(THREAD_CREATE_FAIL, -1));
-		pthread_detach(th_id);
-		usleep(100000);
+		// pthread_detach(th_id);
 	}
+	usleep(1000);
 	return (0);
 }
 
