@@ -49,3 +49,20 @@ void ft_putstr_fd(char *str, int fd)
 		i++;
 	write(fd, str, i);
 }
+
+#define USLEEP_INCREMENT 500
+
+void ft_usleep(useconds_t time_val) {
+	time_t start_time;
+	useconds_t to_wait;
+	useconds_t sleep_val;
+
+	start_time = get_time();
+	to_wait = (start_time * 1000 + time_val) - get_time() * 1000;
+	sleep_val = to_wait > USLEEP_INCREMENT ? USLEEP_INCREMENT : to_wait; 
+	while (to_wait > 0) {
+		usleep(sleep_val);
+		to_wait = (start_time * 1000 + time_val) - get_time() * 1000;
+		sleep_val = to_wait > USLEEP_INCREMENT ? USLEEP_INCREMENT : to_wait; 
+	}
+}

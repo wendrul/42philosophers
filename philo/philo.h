@@ -36,4 +36,6 @@ void	ft_putstr_fd(char *str, int fd);
 void	*philosopher(void *philo);
 void	print_status(t_philo philo, char *msg);
 
+void	ft_usleep(useconds_t time_val);
+
 #endif

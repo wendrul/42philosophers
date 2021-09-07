@@ -9,7 +9,7 @@ void	take_fork(t_philo philo, pthread_mutex_t *fork)
 void	philo_eat(t_philo philo)
 {
 	print_status(philo, PHILO_EAT_MESSAGE);
-	usleep(philo.eat_time * 1000);
+	ft_usleep(philo.eat_time * 1000);
 	pthread_mutex_unlock(philo.left_fork);
 	pthread_mutex_unlock(philo.right_fork);
 }
@@ -17,7 +17,7 @@ void	philo_eat(t_philo philo)
 void	philo_sleep(t_philo philo)
 {
 	print_status(philo, PHILO_SLEEP_MESSAGE);
-	usleep(philo.sleep_time * 1000);
+	ft_usleep(philo.sleep_time * 1000);
 }
 
 void	philo_think(t_philo philo)
