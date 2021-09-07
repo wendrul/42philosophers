@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   utils.c                                            :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: ede-thom <ede-thom@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2021/09/07 15:34:44 by ede-thom          #+#    #+#             */
+/*   Updated: 2021/09/07 15:41:38 by ede-thom         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "philo.h"
 
 time_t	get_time(void)
@@ -10,12 +22,20 @@ time_t	get_time(void)
 
 int	ft_strlen(char const *str)
 {
-	int i;
+	int	i;
 
 	i = 0;
 	while (str[i])
 		i++;
 	return (i);
+}
+
+int	tern(int condition, int yes, int no)
+{
+	if (condition)
+		return (yes);
+	else
+		return (no);
 }
 
 int	ft_atoi(char const *str)
@@ -28,10 +48,10 @@ int	ft_atoi(char const *str)
 	if (!str)
 		return (0);
 	i = 0;
-	while (str[i] == '\t' || str[i] == '\n' || str[i] == '\v' ||
-			str[i] == '\f' || str[i] == '\r' || str[i] == ' ')
+	while (str[i] == '\t' || str[i] == '\n' || str[i] == '\v'
+		|| str[i] == '\f' || str[i] == '\r' || str[i] == ' ')
 		i++;
-	is_neg = (str[i] == '-') ? -1 : 1;
+	is_neg = tern((str[i] == '-'), -1, 1);
 	if (is_neg == -1 || str[i] == '+')
 		i++;
 	start = i;
@@ -41,28 +61,19 @@ int	ft_atoi(char const *str)
 	return (res * is_neg);
 }
 
-void ft_putstr_fd(char *str, int fd)
+void	ft_usleep(useconds_t time_val)
 {
-	int i;
-	i = -1;
-	while (str[i])
-		i++;
-	write(fd, str, i);
-}
-
-#define USLEEP_INCREMENT 500
-
-void ft_usleep(useconds_t time_val) {
-	time_t start_time;
-	useconds_t to_wait;
-	useconds_t sleep_val;
+	time_t		start_time;
+	useconds_t	to_wait;
+	useconds_t	sleep_val;
 
 	start_time = get_time();
 	to_wait = (start_time * 1000 + time_val) - get_time() * 1000;
-	sleep_val = to_wait > USLEEP_INCREMENT ? USLEEP_INCREMENT : to_wait; 
-	while (to_wait > 0) {
+	sleep_val = tern(to_wait > USLEEP_INCREMENT, USLEEP_INCREMENT, to_wait);
+	while (to_wait > 0)
+	{
 		usleep(sleep_val);
 		to_wait = (start_time * 1000 + time_val) - get_time() * 1000;
-		sleep_val = to_wait > USLEEP_INCREMENT ? USLEEP_INCREMENT : to_wait; 
+		sleep_val = tern(to_wait > USLEEP_INCREMENT, USLEEP_INCREMENT, to_wait);
 	}
 }

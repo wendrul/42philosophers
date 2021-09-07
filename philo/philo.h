@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   philo.h                                            :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: ede-thom <ede-thom@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2021/09/07 15:31:54 by ede-thom          #+#    #+#             */
+/*   Updated: 2021/09/07 15:35:10 by ede-thom         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #ifndef PHILO_H
 # define PHILO_H
 
@@ -8,13 +20,14 @@
 # define PHILO_FINISHED_MESSAGE "has taken a fork"
 # define PHILO_DIED_MESSAGE "died"
 
+# define USLEEP_INCREMENT 500
+
 # include <stdio.h>
 # include <sys/time.h>
 # include <string.h>
 # include <pthread.h>
 # include <unistd.h>
 # include <stdlib.h>
-
 
 typedef struct s_philo
 {

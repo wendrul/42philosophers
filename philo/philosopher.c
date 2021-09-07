@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   philosopher.c                                      :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: ede-thom <ede-thom@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2021/09/07 15:33:34 by ede-thom          #+#    #+#             */
+/*   Updated: 2021/09/07 15:34:36 by ede-thom         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "philo.h"
 
 void	take_fork(t_philo philo, pthread_mutex_t *fork)
@@ -27,12 +39,13 @@ void	philo_think(t_philo philo)
 
 void	*philosopher(void *philo_ptr)
 {
-	t_philo philo;
-	t_philo *philo_ptr2;
+	t_philo	philo;
+	t_philo	*philo_ptr2;
 
-	philo = *(t_philo*)philo_ptr;
-	philo_ptr2 = (t_philo*)philo_ptr;
-	if (philo.id % 2 == 1) {
+	philo = *(t_philo *)philo_ptr;
+	philo_ptr2 = (t_philo *)philo_ptr;
+	if (philo.id % 2 == 1)
+	{
 		usleep(1000 * (philo.eat_time / 2));
 	}
 	while (philo.remaining_meals != 0)
