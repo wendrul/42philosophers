@@ -6,7 +6,7 @@
 /*   By: ede-thom <ede-thom@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/16 11:41:33 by wendrul           #+#    #+#             */
-/*   Updated: 2021/09/07 15:41:55 by ede-thom         ###   ########.fr       */
+/*   Updated: 2021/09/08 13:38:42 by ede-thom         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,12 +14,12 @@
 
 void	ft_putstr_fd(char *str, int fd)
 {
-	int	i;
+	int	len;
 
-	i = -1;
-	while (str[i])
-		i++;
-	write(fd, str, i);
+	len = 0;
+	while (str[len])
+		len++;
+	write(fd, str, len);
 }
 
 int	error_exit(char *msg, int exit_code)

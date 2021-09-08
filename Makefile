@@ -6,7 +6,7 @@
 #    By: ede-thom <ede-thom@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/11/16 17:26:10 by ede-thom          #+#    #+#              #
-#    Updated: 2021/09/07 11:22:36 by ede-thom         ###   ########.fr        #
+#    Updated: 2021/09/08 13:28:57 by ede-thom         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -19,7 +19,7 @@ SRCS		=	philo/philo.c\
 MKDIR_P		=	mkdir -p
 RM			=	rm -f
 
-NAME		=	philo_one
+NAME		=	philo/philo
 
 # **************************************************************************** #
 
@@ -42,7 +42,7 @@ MAGENTA		=	\033[0;35m
 CYAN		=	\033[0;36m
 RESET		=	\033[0m
 # **************************************************************************** #
-CFLAGS		=	-Wall -Wextra -Werror -g
+CFLAGS		=	-Wall -Wextra -Werror
 
 CC			=	clang
 

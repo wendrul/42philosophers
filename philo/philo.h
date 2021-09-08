@@ -6,7 +6,7 @@
 /*   By: ede-thom <ede-thom@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/07 15:31:54 by ede-thom          #+#    #+#             */
-/*   Updated: 2021/09/07 15:35:10 by ede-thom         ###   ########.fr       */
+/*   Updated: 2021/09/08 15:52:42 by ede-thom         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,8 +38,10 @@ typedef struct s_philo
 	long			eat_time;
 	int				finished_eating;
 	time_t			last_ate;
+	time_t			born_time;
 	pthread_mutex_t	*right_fork;
 	pthread_mutex_t	*left_fork;
+	pthread_mutex_t	*printer;
 }t_philo;
 
 time_t	get_time(void);
@@ -47,7 +49,7 @@ int		ft_atoi(const char *str);
 void	ft_putstr_fd(char *str, int fd);
 
 void	*philosopher(void *philo);
-void	print_status(t_philo philo, char *msg);
+void	print_status(t_philo philo, char *msg, int death);
 
 void	ft_usleep(useconds_t time_val);
 

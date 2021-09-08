@@ -6,7 +6,7 @@
 /*   By: ede-thom <ede-thom@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/07 15:33:34 by ede-thom          #+#    #+#             */
-/*   Updated: 2021/09/07 15:34:36 by ede-thom         ###   ########.fr       */
+/*   Updated: 2021/09/08 15:47:31 by ede-thom         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,12 +15,12 @@
 void	take_fork(t_philo philo, pthread_mutex_t *fork)
 {
 	pthread_mutex_lock(fork);
-	print_status(philo, PHILO_FORK_MESSAGE);
+	print_status(philo, PHILO_FORK_MESSAGE, 0);
 }
 
 void	philo_eat(t_philo philo)
 {
-	print_status(philo, PHILO_EAT_MESSAGE);
+	print_status(philo, PHILO_EAT_MESSAGE, 0);
 	ft_usleep(philo.eat_time * 1000);
 	pthread_mutex_unlock(philo.left_fork);
 	pthread_mutex_unlock(philo.right_fork);
@@ -28,13 +28,13 @@ void	philo_eat(t_philo philo)
 
 void	philo_sleep(t_philo philo)
 {
-	print_status(philo, PHILO_SLEEP_MESSAGE);
+	print_status(philo, PHILO_SLEEP_MESSAGE, 0);
 	ft_usleep(philo.sleep_time * 1000);
 }
 
 void	philo_think(t_philo philo)
 {
-	print_status(philo, PHILO_THINK_MESSAGE);
+	print_status(philo, PHILO_THINK_MESSAGE, 0);
 }
 
 void	*philosopher(void *philo_ptr)

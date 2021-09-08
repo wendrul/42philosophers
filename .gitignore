@@ -1,4 +1,5 @@
 philo_one
+philo/philo
 obj/
 *.out
 *.o
