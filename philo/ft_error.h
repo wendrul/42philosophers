@@ -21,7 +21,9 @@
 
 # define ITOA_MALLOC_FAIL "malloc failed on ft_itoa"
 # define MALLOC_FAIL "malloc failed"
-# define WRONG_NUMBER_OF_ARGS "Wrong number of arguments "
+# define WRONG_NUMBER_OF_ARGS "Wrong number of arguments"
+# define INVALID_AMOUNT_OF_PHILOS "Invalid number of philosophers"
+# define INVALID_TIME_SPEC "Invalid time specification"
 # define PARSING_ERROR "parsing failed"
 # define THREAD_CREATE_FAIL "creating thread failed"
 # define MUTEX_INIT_FAIL "failed to init mutex"

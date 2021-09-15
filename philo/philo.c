@@ -26,9 +26,32 @@ static void	copy_philo(t_philo *dest, t_philo src, int i)
 	dest->born_time = src.born_time;
 }
 
+int	get_ref(int argc, char **argv, t_philo *ref_philo)
+{
+	t_philo ref;
+
+	ref.death_time = ft_atoi(argv[2]);
+	ref.eat_time = ft_atoi(argv[3]);
+	ref.sleep_time = ft_atoi(argv[4]);
+	if (ref.death_time <= 0 || ref.eat_time <= 0 || ref.sleep_time <= 0)
+		return (error_exit(INVALID_TIME_SPEC, -1));
+	ref.remaining_meals = -1;
+	ref.finished_eating = 0;
+	ref.last_ate = get_time();
+	ref.born_time = ref.last_ate;
+	if (argc == 6)
+	{
+		ref.remaining_meals = ft_atoi(argv[5]);
+		if (ref.remaining_meals < 0)
+			ref.remaining_meals = 0;
+	}
+	*ref_philo = ref;
+	return (0);
+}
+
 int	parse_args(int argc, char **argv, t_philo **philos_ptr)
 {
-	t_philo	reference_philo;
+	t_philo	ref;
 	t_philo	*philos;
 	int		amount;
 	int		i;
@@ -36,21 +59,16 @@ int	parse_args(int argc, char **argv, t_philo **philos_ptr)
 	if (argc != 5 && argc != 6)
 		return (error_exit(WRONG_NUMBER_OF_ARGS, -1));
 	amount = ft_atoi(argv[1]);
-	reference_philo.death_time = ft_atoi(argv[2]);
-	reference_philo.eat_time = ft_atoi(argv[3]);
-	reference_philo.sleep_time = ft_atoi(argv[4]);
-	reference_philo.remaining_meals = -1;
-	reference_philo.finished_eating = 0;
-	reference_philo.last_ate = get_time();
-	reference_philo.born_time = reference_philo.last_ate;
-	if (argc == 6)
-		reference_philo.remaining_meals = ft_atoi(argv[5]);
+	if (amount <= 0)
+		return (error_exit(INVALID_AMOUNT_OF_PHILOS, -1));
+	if (get_ref(argc, argv, &ref) == -1)
+		return(-1);
 	philos = (t_philo *)malloc(sizeof(t_philo) * (amount + 1));
 	if (!philos)
 		return (error_exit(MALLOC_FAIL, -1));
 	i = -1;
 	while (++i < amount)
-		copy_philo(&(philos[i]), reference_philo, i);
+		copy_philo(&(philos[i]), ref, i);
 	*philos_ptr = philos;
 	return (amount);
 }
