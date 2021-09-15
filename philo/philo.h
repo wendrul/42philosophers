@@ -48,6 +48,9 @@ time_t	get_time(void);
 int		ft_atoi(const char *str);
 void	ft_putstr_fd(char *str, int fd);
 
+int		parse_args(int argc, char **argv, t_philo **philos_ptr);
+int		get_ref(int argc, char **argv, t_philo *ref_philo);
+
 void	*philosopher(void *philo);
 void	print_status(t_philo philo, char *msg, int death);
 
