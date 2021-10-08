@@ -59,6 +59,7 @@ static int	start_threads(t_philo *philos, int amount)
 			return (error_exit(THREAD_CREATE_FAIL, -1));
 		pthread_detach(th_id);
 	}
+	free(forks);
 	return (0);
 }
 
