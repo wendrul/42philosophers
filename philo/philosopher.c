@@ -56,7 +56,6 @@ void	*philosopher(void *philo_ptr)
 		philo_eat(philo);
 		philo_sleep(philo);
 		philo_think(philo);
-		usleep(10);
 		if (philo.remaining_meals > 0)
 			philo.remaining_meals--;
 	}
