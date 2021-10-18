@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   philo.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ede-thom <ede-thom@student.42.fr>          +#+  +:+       +#+        */
+/*   By: user42 <user42@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/29 12:16:46 by wendrul           #+#    #+#             */
-/*   Updated: 2021/09/08 16:00:08 by ede-thom         ###   ########.fr       */
+/*   Updated: 2021/10/18 13:06:28 by user42           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -111,11 +111,8 @@ int	main(int argc, char **argv)
 	end_sim(philos[0]);
 	i = -1;
 	ft_usleep((philos[0].eat_time + philos[0].eat_time) * amount * 1000);
-	while (++i)
-	{
-		free(philos[i].left_fork);
+	while (++i < amount)
 		free(philos[i].right_fork);
-	}
 	free(philos[0].simulation_end);
 	free(philos[0].printer);
 	free(philos[0].get_time_lock);
