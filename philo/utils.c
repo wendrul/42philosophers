@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ede-thom <ede-thom@student.42.fr>          +#+  +:+       +#+        */
+/*   By: user42 <user42@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/07 15:34:44 by ede-thom          #+#    #+#             */
-/*   Updated: 2021/09/07 15:41:38 by ede-thom         ###   ########.fr       */
+/*   Updated: 2021/10/18 13:16:37 by user42           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ time_t	get_time_protected(t_philo philo)
 {
 	time_t t;
 
-	pthread_mutex_unlock(philo.get_time_lock);
+	pthread_mutex_lock(philo.get_time_lock);
 	t = get_time();
 	pthread_mutex_unlock(philo.get_time_lock);
 	return (t);

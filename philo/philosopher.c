@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   philosopher.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ede-thom <ede-thom@student.42.fr>          +#+  +:+       +#+        */
+/*   By: user42 <user42@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/07 15:33:34 by ede-thom          #+#    #+#             */
-/*   Updated: 2021/09/08 15:47:31 by ede-thom         ###   ########.fr       */
+/*   Updated: 2021/10/18 13:17:18 by user42           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,6 @@
 
 void	take_fork(t_philo philo, pthread_mutex_t *fork)
 {
-	print_status(philo, "Will try to grab a fork", 0);
 	pthread_mutex_lock(fork);
 	print_status(philo, PHILO_FORK_MESSAGE, 0);
 }
@@ -25,16 +24,12 @@ void	philo_eat(t_philo philo)
 	ft_usleep(philo.eat_time * 1000);
 	pthread_mutex_unlock(philo.left_fork);
 	pthread_mutex_unlock(philo.right_fork);
-	print_status(philo, "released forks", 0);
-
 }
 
 void	philo_sleep(t_philo philo)
 {
 	print_status(philo, PHILO_SLEEP_MESSAGE, 0);
 	ft_usleep(philo.sleep_time * 1000);
-	print_status(philo, "finished sleep", 0);
-
 }
 
 void	philo_think(t_philo philo)
@@ -68,8 +63,6 @@ void	*philosopher(void *philo_ptr)
 		philo_sleep(philo);
 		philo_think(philo);
 	}
-	printf("shutting down philo %d\n", philo.id);
-	usleep(5000);
 	philo_ptr2->finished_eating = 1;
 	return (NULL);
 }
