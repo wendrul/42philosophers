@@ -14,6 +14,7 @@
 
 void	take_fork(t_philo philo, pthread_mutex_t *fork)
 {
+	print_status(philo, "Will try to grab a fork", 0);
 	pthread_mutex_lock(fork);
 	print_status(philo, PHILO_FORK_MESSAGE, 0);
 }
@@ -24,12 +25,16 @@ void	philo_eat(t_philo philo)
 	ft_usleep(philo.eat_time * 1000);
 	pthread_mutex_unlock(philo.left_fork);
 	pthread_mutex_unlock(philo.right_fork);
+	print_status(philo, "released forks", 0);
+
 }
 
 void	philo_sleep(t_philo philo)
 {
 	print_status(philo, PHILO_SLEEP_MESSAGE, 0);
 	ft_usleep(philo.sleep_time * 1000);
+	print_status(philo, "finished sleep", 0);
+
 }
 
 void	philo_think(t_philo philo)
@@ -45,20 +50,26 @@ void	*philosopher(void *philo_ptr)
 	philo = *(t_philo *)philo_ptr;
 	philo_ptr2 = (t_philo *)philo_ptr;
 	if (philo.id % 2 == 1)
-	{
 		usleep(1000 * (philo.eat_time / 2));
-	}
-	while (philo.remaining_meals != 0)
+	while (!is_sim_end(philo) && philo.remaining_meals != 0)
 	{
 		take_fork(philo, philo.left_fork);
+		if (philo.amount_of_philos == 1)
+			return (NULL);
 		take_fork(philo, philo.right_fork);
+		pthread_mutex_lock(philo.get_time_lock);
 		philo_ptr2->last_ate = get_time();
+		pthread_mutex_unlock(philo.get_time_lock);
 		philo_eat(philo);
-		philo_sleep(philo);
-		philo_think(philo);
 		if (philo.remaining_meals > 0)
 			philo.remaining_meals--;
+		if (philo.remaining_meals == 0 || is_sim_end(philo))
+			break;
+		philo_sleep(philo);
+		philo_think(philo);
 	}
+	printf("shutting down philo %d\n", philo.id);
+	usleep(5000);
 	philo_ptr2->finished_eating = 1;
 	return (NULL);
 }

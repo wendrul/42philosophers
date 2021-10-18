@@ -13,14 +13,30 @@
 #include "philo.h"
 #include "ft_error.h"
 
+int		is_sim_end(t_philo philo)
+{
+	char tmp;
+	// pthread_mutex_lock(philo.get_time_lock);
+	tmp = (*(philo.simulation_end));
+	// pthread_mutex_unlock(philo.get_time_lock);
+	return(tmp);
+}
+
+void	end_sim(t_philo philo)
+{
+	// pthread_mutex_lock(philo.get_time_lock);
+	*(philo.simulation_end) = 1;
+	// pthread_mutex_unlock(philo.get_time_lock);
+}
+
 void	print_status(t_philo philo, char *msg, int death)
 {
-	static int	has_died = 0;
-
-	if (death)
-		has_died = death;
+	// static int	has_died = 0;
+	(void )death;
+	// if (death)
+	// 	has_died = death;
 	pthread_mutex_lock(philo.printer);
-	if (death || !has_died)
+	// if ((death || !has_died) && !*(philo.simulation_end))
 		printf("%-7ld %-2d %s\n",
 			get_time() - philo.born_time, philo.id, msg);
 	pthread_mutex_unlock(philo.printer);
@@ -36,6 +52,8 @@ static void	copy_philo(t_philo *dest, t_philo src, int i)
 	dest->finished_eating = src.finished_eating;
 	dest->last_ate = src.last_ate;
 	dest->born_time = src.born_time;
+	dest->simulation_end = src.simulation_end;
+	dest->amount_of_philos = src.amount_of_philos;
 }
 
 int	get_ref(int argc, char **argv, t_philo *ref_philo)
@@ -54,8 +72,8 @@ int	get_ref(int argc, char **argv, t_philo *ref_philo)
 	if (argc == 6)
 	{
 		ref.remaining_meals = ft_atoi(argv[5]);
-		if (ref.remaining_meals < 0)
-			ref.remaining_meals = 0;
+		if (ref.remaining_meals <= 0)
+			return (error_exit(INVALID_AMOUNT_TO_EAT, -1));
 	}
 	*ref_philo = ref;
 	return (0);
@@ -76,8 +94,11 @@ int	parse_args(int argc, char **argv, t_philo **philos_ptr)
 	if (get_ref(argc, argv, &ref) == -1)
 		return (-1);
 	philos = (t_philo *)malloc(sizeof(t_philo) * (amount + 1));
-	if (!philos)
+	ref.simulation_end = (char*)malloc(sizeof(char));
+	if (!philos || !ref.simulation_end)
 		return (error_exit(MALLOC_FAIL, -1));
+	*(ref.simulation_end) = 0;
+	ref.amount_of_philos = amount;
 	i = -1;
 	while (++i < amount)
 		copy_philo(&(philos[i]), ref, i);

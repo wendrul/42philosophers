@@ -32,21 +32,28 @@
 typedef struct s_philo
 {
 	int				id;
+	int				amount_of_philos;
 	int				remaining_meals;
 	long			death_time;
 	long			sleep_time;
 	long			eat_time;
 	int				finished_eating;
+	char			*simulation_end;
 	time_t			last_ate;
 	time_t			born_time;
 	pthread_mutex_t	*right_fork;
 	pthread_mutex_t	*left_fork;
+	pthread_mutex_t *get_time_lock;
 	pthread_mutex_t	*printer;
 }t_philo;
 
-time_t	get_time(void);
+time_t	get_time();
+time_t	get_time_protected(t_philo philo);
 int		ft_atoi(const char *str);
 void	ft_putstr_fd(char *str, int fd);
+
+int		is_sim_end(t_philo philo);
+void	end_sim(t_philo philo);
 
 int		parse_args(int argc, char **argv, t_philo **philos_ptr);
 int		get_ref(int argc, char **argv, t_philo *ref_philo);

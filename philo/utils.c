@@ -12,12 +12,22 @@
 
 #include "philo.h"
 
-time_t	get_time(void)
+time_t	get_time()
 {
 	static struct timeval	tv;
 
 	gettimeofday(&tv, NULL);
 	return ((tv.tv_sec * (time_t)1000) + (tv.tv_usec / 1000));
+}
+
+time_t	get_time_protected(t_philo philo)
+{
+	time_t t;
+
+	pthread_mutex_unlock(philo.get_time_lock);
+	t = get_time();
+	pthread_mutex_unlock(philo.get_time_lock);
+	return (t);
 }
 
 int	ft_strlen(char const *str)

@@ -27,6 +27,7 @@
 # define PARSING_ERROR "parsing failed"
 # define THREAD_CREATE_FAIL "creating thread failed"
 # define MUTEX_INIT_FAIL "failed to init mutex"
+# define INVALID_AMOUNT_TO_EAT "Invalid amount of times to eat"
 
 int	error_exit(char *msg, int exit_code);
 

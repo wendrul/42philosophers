@@ -41,13 +41,17 @@ static int	start_threads(t_philo *philos, int amount)
 	pthread_t		th_id;
 	pthread_mutex_t	**forks;
 	pthread_mutex_t	*printer;
+	pthread_mutex_t *get_time_lock;
 
 	if (dishwash_forks(&forks, amount) == -1)
 		return (-1);
 	printer = (pthread_mutex_t *)malloc(sizeof(pthread_mutex_t));
-	if (!printer)
+	get_time_lock = (pthread_mutex_t *)malloc(sizeof(pthread_mutex_t));
+	if (!printer || !get_time_lock)
 		return (error_exit(MALLOC_FAIL, -1));
 	if (pthread_mutex_init(printer, NULL) != 0)
+		return (error_exit(MUTEX_INIT_FAIL, -1));
+	if (pthread_mutex_init(get_time_lock, NULL) != 0)
 		return (error_exit(MUTEX_INIT_FAIL, -1));
 	i = -1;
 	while (++i < amount)
@@ -55,6 +59,7 @@ static int	start_threads(t_philo *philos, int amount)
 		philos[i].left_fork = forks[i];
 		philos[i].right_fork = forks[(i + 1) % amount];
 		philos[i].printer = printer;
+		philos[i].get_time_lock = get_time_lock;
 		if (pthread_create(&th_id, NULL, philosopher, (void *)&philos[i]) != 0)
 			return (error_exit(THREAD_CREATE_FAIL, -1));
 		pthread_detach(th_id);
@@ -66,18 +71,28 @@ static int	start_threads(t_philo *philos, int amount)
 static void	check_vitals_loop(t_philo *philos, int amount)
 {
 	int	i;
+	int all_finished;
 
 	while (1)
 	{
 		i = -1;
+		all_finished = 1;
 		usleep(500);
 		while (++i < amount)
 		{	
-			if (philos[i].finished_eating)
-				return ;
+			if (!philos[i].finished_eating)
+				all_finished = 0;
+			pthread_mutex_lock(philos[i].get_time_lock);
 			if (get_time() - philos[i].last_ate > philos[i].death_time)
+			{
+				pthread_mutex_unlock(philos[i].get_time_lock);
 				return (print_status(philos[i], PHILO_DIED_MESSAGE, 1));
+			}
+			pthread_mutex_unlock(philos[i].get_time_lock);
+
 		}
+		if (all_finished)
+			return ;
 	}
 }
 
@@ -85,6 +100,7 @@ int	main(int argc, char **argv)
 {
 	t_philo	*philos;
 	int		amount;
+	int		i;
 
 	amount = parse_args(argc, argv, &philos);
 	if (amount == -1)
@@ -92,5 +108,17 @@ int	main(int argc, char **argv)
 	if (start_threads(philos, amount) == -1)
 		return (1);
 	check_vitals_loop(philos, amount);
+	end_sim(philos[0]);
+	i = -1;
+	ft_usleep((philos[0].eat_time + philos[0].eat_time) * amount * 1000);
+	while (++i)
+	{
+		free(philos[i].left_fork);
+		free(philos[i].right_fork);
+	}
+	free(philos[0].simulation_end);
+	free(philos[0].printer);
+	free(philos[0].get_time_lock);
+	free(philos);
 	return (0);
 }
