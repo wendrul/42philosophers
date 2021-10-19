@@ -32,6 +32,7 @@
 typedef struct s_philo
 {
 	int				id;
+	pthread_t		th_id;
 	int				amount_of_philos;
 	int				remaining_meals;
 	long			death_time;
@@ -61,6 +62,6 @@ int		get_ref(int argc, char **argv, t_philo *ref_philo);
 void	*philosopher(void *philo);
 void	print_status(t_philo philo, char *msg, int death);
 
-void	ft_usleep(useconds_t time_val);
+void	ft_usleep(useconds_t time_val, t_philo philo);
 
 #endif

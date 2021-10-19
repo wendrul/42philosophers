@@ -33,12 +33,12 @@ void	print_status(t_philo philo, char *msg, int death)
 {
 	static int	has_died = 0;
 
+	pthread_mutex_lock(philo.printer);
 	if (death)
 		has_died = death;
-	pthread_mutex_lock(philo.printer);
 	if ((death || !has_died) && !*(philo.simulation_end))
 		printf("%-7ld %-2d %s\n",
-			get_time() - philo.born_time, philo.id, msg);
+			get_time_protected(philo) - philo.born_time, philo.id, msg);
 	pthread_mutex_unlock(philo.printer);
 }
 

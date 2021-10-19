@@ -18,20 +18,25 @@ static int	dishwash_forks(pthread_mutex_t ***forks_ptr, int amount)
 {
 	int				i;
 	pthread_mutex_t	**forks;
+	pthread_mutexattr_t *attr;
 
+	attr = (pthread_mutexattr_t *)malloc(sizeof(pthread_mutexattr_t));
 	forks = (pthread_mutex_t **)malloc(sizeof(pthread_mutex_t *) * amount);
-	if (!forks)
+	if (!forks || !attr)
 		return (error_exit(MALLOC_FAIL, -1));
+	pthread_mutexattr_init(attr);
+	pthread_mutexattr_settype(attr, PTHREAD_MUTEX_ERRORCHECK);
 	i = -1;
 	while (++i < amount)
 	{
 		forks[i] = (pthread_mutex_t *)malloc(sizeof(pthread_mutex_t));
 		if (!forks[i])
 			return (error_exit(MALLOC_FAIL, -1));
-		if (pthread_mutex_init(forks[i], NULL) != 0)
+		if (pthread_mutex_init(forks[i], attr) != 0)
 			return (error_exit(MUTEX_INIT_FAIL, -1));
 	}
 	*forks_ptr = forks;
+	free(attr);
 	return (0);
 }
 
@@ -62,7 +67,8 @@ static int	start_threads(t_philo *philos, int amount)
 		philos[i].get_time_lock = get_time_lock;
 		if (pthread_create(&th_id, NULL, philosopher, (void *)&philos[i]) != 0)
 			return (error_exit(THREAD_CREATE_FAIL, -1));
-		pthread_detach(th_id);
+		philos[i].th_id = th_id;
+		// pthread_detach(th_id);
 	}
 	free(forks);
 	return (0);
@@ -89,7 +95,6 @@ static void	check_vitals_loop(t_philo *philos, int amount)
 				return (print_status(philos[i], PHILO_DIED_MESSAGE, 1));
 			}
 			pthread_mutex_unlock(philos[i].get_time_lock);
-
 		}
 		if (all_finished)
 			return ;
@@ -110,9 +115,13 @@ int	main(int argc, char **argv)
 	check_vitals_loop(philos, amount);
 	end_sim(philos[0]);
 	i = -1;
-	ft_usleep((philos[0].eat_time + philos[0].eat_time) * amount * 1000);
 	while (++i < amount)
-		free(philos[i].right_fork);
+		pthread_join(philos[i].th_id, NULL);
+	while (--i >= 0)
+	{
+		pthread_mutex_destroy(philos[i].left_fork);
+		free(philos[i].left_fork);
+	}
 	free(philos[0].simulation_end);
 	free(philos[0].printer);
 	free(philos[0].get_time_lock);
