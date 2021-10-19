@@ -41,7 +41,6 @@ int	tern(int condition, int yes, int no)
 int	ft_atoi(char const *str)
 {
 	int	i;
-	int	start;
 	int	is_neg;
 	int	res;
 
@@ -54,7 +53,6 @@ int	ft_atoi(char const *str)
 	is_neg = tern((str[i] == '-'), -1, 1);
 	if (is_neg == -1 || str[i] == '+')
 		i++;
-	start = i;
 	res = 0;
 	while (str[i] >= '0' && str[i] <= '9')
 		res = (res * 10) + (str[i++] - '0');
