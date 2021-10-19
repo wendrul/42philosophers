@@ -103,7 +103,7 @@ int	main(int argc, char **argv)
 	if (start_threads(philos, amount) == -1)
 		return (1);
 	check_vitals_loop(philos, amount);
-	*(philos[0].simulation_end) = 0;
+	*(philos[0].simulation_end) = 1;
 	i = -1;
 	while (++i < amount)
 		pthread_join(philos[i].th_id, NULL);

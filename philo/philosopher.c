@@ -16,9 +16,9 @@ int	take_forks(t_philo philo)
 {
 	while (!is_sim_end(philo))
 	{
-		if (pthread_mutex_lock(philo.left_fork))
+		if (pthread_mutex_lock(philo.left_fork) == 0)
 		{
-			if (pthread_mutex_lock(philo.right_fork))
+			if (pthread_mutex_lock(philo.right_fork) == 0)
 				return (1);
 			pthread_mutex_unlock(philo.left_fork);
 		}
