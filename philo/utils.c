@@ -12,22 +12,12 @@
 
 #include "philo.h"
 
-time_t	get_time()
+time_t	get_time(void)
 {
 	static struct timeval	tv;
 
 	gettimeofday(&tv, NULL);
 	return ((tv.tv_sec * (time_t)1000) + (tv.tv_usec / 1000));
-}
-
-time_t	get_time_protected(t_philo philo)
-{
-	time_t t;
-
-	pthread_mutex_lock(philo.get_time_lock);
-	t = get_time();
-	pthread_mutex_unlock(philo.get_time_lock);
-	return (t);
 }
 
 int	ft_strlen(char const *str)
@@ -77,13 +67,13 @@ void	ft_usleep(useconds_t time_val, t_philo philo)
 	useconds_t	to_wait;
 	useconds_t	sleep_val;
 
-	start_time = get_time_protected(philo);
+	start_time = get_time();
 	to_wait = (start_time * 1000 + time_val) - start_time * 1000;
 	sleep_val = tern(to_wait > USLEEP_INCREMENT, USLEEP_INCREMENT, to_wait);
-	while (to_wait > 0)
+	while (to_wait > 0 && !is_sim_end(philo))
 	{
 		usleep(sleep_val);
-		to_wait = (start_time * 1000 + time_val) - get_time_protected(philo) * 1000;
+		to_wait = (start_time * 1000 + time_val) - get_time() * 1000;
 		sleep_val = tern(to_wait > USLEEP_INCREMENT, USLEEP_INCREMENT, to_wait);
 	}
 }

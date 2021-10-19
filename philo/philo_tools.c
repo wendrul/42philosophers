@@ -13,20 +13,12 @@
 #include "philo.h"
 #include "ft_error.h"
 
-int		is_sim_end(t_philo philo)
+int	is_sim_end(t_philo philo)
 {
-	char tmp;
-	// pthread_mutex_lock(philo.get_time_lock);
-	tmp = (*(philo.simulation_end));
-	// pthread_mutex_unlock(philo.get_time_lock);
-	return(tmp);
-}
+	char	tmp;
 
-void	end_sim(t_philo philo)
-{
-	// pthread_mutex_lock(philo.get_time_lock);
-	*(philo.simulation_end) = 1;
-	// pthread_mutex_unlock(philo.get_time_lock);
+	tmp = (*(philo.simulation_end));
+	return (tmp);
 }
 
 void	print_status(t_philo philo, char *msg, int death)
@@ -36,9 +28,9 @@ void	print_status(t_philo philo, char *msg, int death)
 	pthread_mutex_lock(philo.printer);
 	if (death)
 		has_died = death;
-	if ((death || !has_died) && !*(philo.simulation_end))
+	if ((death || !has_died) && !is_sim_end(philo))
 		printf("%-7ld %-2d %s\n",
-			get_time_protected(philo) - philo.born_time, philo.id, msg);
+			get_time() - philo.born_time, philo.id, msg);
 	pthread_mutex_unlock(philo.printer);
 }
 
@@ -94,7 +86,7 @@ int	parse_args(int argc, char **argv, t_philo **philos_ptr)
 	if (get_ref(argc, argv, &ref) == -1)
 		return (-1);
 	philos = (t_philo *)malloc(sizeof(t_philo) * (amount + 1));
-	ref.simulation_end = (char*)malloc(sizeof(char));
+	ref.simulation_end = (char *)malloc(sizeof(char));
 	if (!philos || !ref.simulation_end)
 		return (error_exit(MALLOC_FAIL, -1));
 	*(ref.simulation_end) = 0;
